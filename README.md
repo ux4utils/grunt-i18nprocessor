@@ -35,19 +35,76 @@ grunt.initConfig({
 });
 ```
 
+The task is designed to take a JSON i18n Langauge file and split it into separate language specific files
+
+```js
+{
+    "validateFail_number": {
+        "en": "Numeric value required",
+        "de": "Numerischer Wert erforderlich",
+        "fr": "Valeur numérique obligatoire",
+        "nl": "Numerieke waarde verplicht",
+        "fi": "Täytä numeerinen arvo"
+    },
+    "validateFail_email": {
+        "en": "Valid email address required",
+        "de": "Gültige E-Mail-Adresse erforderlich.",
+        "fr": "Adresse mail valide obligatoire",
+        "nl": "Geldig e-mailadres verplicht",
+        "fi": "Lisää toimiva sähköpostiosoite"
+    }
+}
+```
+
+will produce separate files for each language..
+
+eg. `lang.en.js...`
+
+
+```js
+{
+ "copyrightNotice":"My Company (c) Copyright 2006-2015 All Rights Reserved.",
+ "strings":{
+        "validateFail_number":"Numeric value required",
+        "validateFail_email":"Valid email address required"
+    }
+}
+```
+
+
+
 ### Options
 
-#### options.separator
+#### options.languages
+Type: `Array`
+Default value: `["en"]`
+
+A array of base language codes. A new language file will get created for each of these languages
+
+#### options.pretty
+Type: `Boolean`
+Default value: `false`
+
+If true the output JSON is tab separated and readable. 
+
+#### options.copyright
 Type: `String`
-Default value: `',  '`
+Default value: ``
 
-A string value that is used to do something with whatever.
+The copyright string to add into the output json
 
-#### options.punctuation
+#### options.filenameMask
 Type: `String`
-Default value: `'.'`
+Default value: `ux4.%1.js`
 
-A string value that is used to do something else with whatever else.
+The filename mask for the output files. %1 gets replaced with the language code
+
+#### options.outputEnglishIfNoTranslation
+Type: `Boolean`
+Default value: `true`
+
+Output the english string if the string doesn't have a translation for the current language
+
 
 ### Usage Examples
 
@@ -57,30 +114,19 @@ In this example, the default options are used to do something with whatever. So 
 ```js
 grunt.initConfig({
   i18nprocessor: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  i18nprocessor: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+        languages: ['en','de'],
+        pretty: false,
+        copyright: "MyCompany (c) 2015"
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    ux4: {
+        'src': 'myappi18nfile.json',
+        'dest': '/i18n/'
     },
   },
 });
 ```
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

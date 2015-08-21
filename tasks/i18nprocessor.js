@@ -16,7 +16,6 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('i18nprocessor', 'Grunt i18n processor', function() {
       // Merge task-specific and/or target-specific options with these defaults.
       var options = this.options({
-          punctuation: '.',
           separator: ', ',
           languages: ['en'],
           pretty: false,
