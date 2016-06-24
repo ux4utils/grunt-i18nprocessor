@@ -16,7 +16,6 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('i18nprocessor', 'Grunt i18n processor', function() {
       // Merge task-specific and/or target-specific options with these defaults.
       var options = this.options({
-          separator: ', ',
           languages: ['en'],
           pretty: false,
           copyright: "",
@@ -82,7 +81,7 @@ module.exports = function(grunt) {
               output.strings = langJSON[lang];
 
               var s = JSON.stringify(output, null, (options.pretty) ? "\t" : "");
-              console.log(s);
+              
               var filename = options.filenameMask.replace("%1", lang);
 
               console.log(dest + filename);
